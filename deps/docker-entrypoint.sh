@@ -4,7 +4,6 @@
 cleanup() {
     echo "Container stopped, performing cleanup..."
     /etc/init.d/zenoss stop && sleep 2
-    /etc/init.d/mysql stop && sleep 2
     /etc/init.d/rabbitmq-server stop && sleep 2
     /etc/init.d/redis-server stop && sleep 2
     /etc/init.d/memcached stop
@@ -23,7 +22,6 @@ if [ ! -f /firstrun ]; then
     rabbitmqctl set_permissions -p /zenoss zenoss '.*' '.*' '.*'
     touch /firstrun
 fi
-/etc/init.d/mysql start && sleep 2
 /etc/init.d/zenoss start && sleep 5
 tail -f /dev/null &
 
