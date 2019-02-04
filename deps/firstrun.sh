@@ -25,12 +25,12 @@ sudo -H -E -u zenoss bash -c 'export ZENHOME="/usr/local/zenoss" && /usr/local/z
 sudo -H -E -u zenoss bash -c 'export ZENHOME="/usr/local/zenoss" && /usr/local/zenoss/bin/zenglobalconf -u zep-host="$MYSQLHOST"'
 
 # Change MYSQL host and user password setting in zodb_db_main.conf
-sed -i "s/zenoss4-mysql/$MYSQLHOST/g" $ZENHOME/etc/zodb_db_main.conf
-sed -i "s/passwd zenoss/passwd $USERPW/g" $ZENHOME/etc/zodb_db_main.conf
+sed -i "s/zenoss4-mysql/$MYSQLHOST/g" /usr/local/zenoss/etc/zodb_db_main.conf
+sed -i "s/passwd zenoss/passwd $USERPW/g" /usr/local/zenoss/etc/zodb_db_main.conf
 
 # Change MYSQL host and user password setting in zodb_db_session.conf
-sed -i "s/zenoss4-mysql/$MYSQLHOST/g" $ZENHOME/etc/zodb_db_session.conf
-sed -i "s/passwd zenoss/passwd $USERPW/g" $ZENHOME/etc/zodb_db_session.conf
+sed -i "s/zenoss4-mysql/$MYSQLHOST/g" /usr/local/zenoss/etc/zodb_db_session.conf
+sed -i "s/passwd zenoss/passwd $USERPW/g" /usr/local/zenoss/etc/zodb_db_session.conf
 
 # Import the ZenOSS MySQL files into the MySQL host.
 cat <<EOF >> /mysqlsetup.sh
