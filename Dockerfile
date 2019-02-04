@@ -80,7 +80,7 @@ RUN ZENOSSHOME="/home/zenoss" \
     && cd / && wget -N https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/deps/firstrun.sh \
     && cd / && chown root:root firstrun.sh && chmod +x firstrun.sh \
     && if [ ! -f $ZENHOME/etc/global.conf ]; then cp $ZENHOME/etc/global.conf.example $ZENHOME/etc/global.conf; fi \
-    && /firstrun.sh \
+    && /firstrun.sh && rm /mysqlsetup.sh \
     && su -l -c "$ZENHOME/bin/secure_zenoss_ubuntu.sh" zenoss \
     && /etc/init.d/zenoss stop && sleep 2 \
     && /etc/init.d/rabbitmq-server stop && sleep 2 \
