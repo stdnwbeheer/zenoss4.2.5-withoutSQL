@@ -9,6 +9,12 @@ RUN ZENOSSHOME="/home/zenoss" \
     && ZVERb="4.2.5" \
     && ZVERc="2108" \
     && DVER="03c" \
+    && MYSQLHOST="${MYSQLHOST:=zenoss4-mysql}"
+    && ROOTPW="${ROOTPW:=zenoss}"
+    && USERPW="${USERPW:=zenoss}"
+    && RABBITMQPW="${RABBITMQPW:=zenoss}"
+    && ZENHOME="${ZENHOME:=/usr/local/zenoss}"
+    && ZENOSSHOME="${ZENOSSHOME:=/home/zenoss}"
     && echo $(grep $(hostname) /etc/hosts | cut -f1) zenoss4-core >> /etc/hosts && echo "zenoss4-core" > /etc/hostname \
     && export ZENHOME=/usr/local/zenoss \
     && export PYTHONPATH=/usr/local/zenoss/lib/python \
@@ -32,9 +38,6 @@ RUN ZENOSSHOME="/home/zenoss" \
     && dpkg -i $DOWNDIR/rabbitmq-server_3.3.0-1_all.deb \
     && chown -R zenoss:zenoss $ZENHOME && echo \
     && /etc/init.d/rabbitmq-server start && sleep 2\
-    && rabbitmqctl add_user zenoss zenoss \
-    && rabbitmqctl add_vhost /zenoss \
-    && rabbitmqctl set_permissions -p /zenoss zenoss '.*' '.*' '.*' && echo \
     && cd /usr/local/zenoss/lib/python/pynetsnmp \
     && mv netsnmp.py netsnmp.py.orig \
     && wget https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/deps/netsnmp.py \
@@ -76,14 +79,18 @@ RUN ZENOSSHOME="/home/zenoss" \
     && cd / && chown root:root docker-entrypoint.sh && chmod +x docker-entrypoint.sh \
     && cd / && wget -N https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/deps/firstrun.sh \
     && cd / && chown root:root firstrun.sh && chmod +x firstrun.sh \
-    && zenglobalconf -u zodb-host="zenoss4-mysql" \
-    && zenglobalconf -u zep-host="zenoss4-mysql" \
+    && if [ ! -f $ZENHOME/etc/global.conf ]; then cp $ZENHOME/etc/global.conf.example $ZENHOME/etc/global.conf; fi \
+    && /firstrun.sh \
     && su -l -c "$ZENHOME/bin/secure_zenoss_ubuntu.sh" zenoss \
     && /etc/init.d/zenoss stop && sleep 2 \
     && /etc/init.d/rabbitmq-server stop && sleep 2 \
     && /etc/init.d/memcached stop && sleep 2 \
     && /etc/init.d/redis-server stop && sleep 2 \
-    && rm /var/log/rabbitmq/*.log \
+    && cd $ZENOSSHOME \
+    && rm *.sql \
+    && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zenoss_zep > zenoss_zep.sql
+    && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zodb > zodb.sql
+    && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zodb_session > zodb_session.sql
     && apt-get -y purge wget \
     && apt-get -y autoremove \
     && apt-get -y autoclean \
