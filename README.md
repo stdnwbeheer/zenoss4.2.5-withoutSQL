@@ -7,7 +7,9 @@ This Dockerfile can only be build with these prerequisites, so you'll need a Doc
 
 ``` bash
 docker network create zenoss \
-docker run -d -h zenoss4-mysql --name zenoss4-mysql --network zenoss --network-alias zenoss4-mysql -e MYSQL_ROOT_PASSWORD=zenoss mysql:5.5.62
+docker run -d -h zenoss4-mysql --name zenoss4-mysql \
+--network zenoss --network-alias zenoss4-mysql \
+-e MYSQL_ROOT_PASSWORD=zenoss mysql:5.5.62
 ```
 
 # Usage:
