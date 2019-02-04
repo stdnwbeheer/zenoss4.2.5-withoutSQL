@@ -4,7 +4,7 @@ Zenoss 4.2.5 on Ubuntu 14.04 base image in a Docker Container without SQL integr
 
 # Prerequisites
 This Dockerfile can only be build with these prerequisites, so you'll need a Docker host. \
-docker network create zenoss
+docker network create zenoss \
 docker run -d \
            -h zenoss4-mysql \
            --name zenoss4-mysql \
