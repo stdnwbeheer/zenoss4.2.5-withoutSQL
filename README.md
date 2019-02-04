@@ -13,4 +13,7 @@ docker run -d -h zenoss4-mysql --name zenoss4-mysql \
 ```
 
 # Usage:
-docker build -t "test/zenoss4.2.5-withoutsql:1.0" https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/Dockerfile
+``` bash
+docker build -t "test/zenoss4.2.5-withoutsql:1.0" \
+https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/Dockerfile
+```
