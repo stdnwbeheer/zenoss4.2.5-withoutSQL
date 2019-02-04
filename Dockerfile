@@ -9,12 +9,12 @@ RUN ZENOSSHOME="/home/zenoss" \
     && ZVERb="4.2.5" \
     && ZVERc="2108" \
     && DVER="03c" \
-    && MYSQLHOST="${MYSQLHOST:=zenoss4-mysql}"
-    && ROOTPW="${ROOTPW:=zenoss}"
-    && USERPW="${USERPW:=zenoss}"
-    && RABBITMQPW="${RABBITMQPW:=zenoss}"
-    && ZENHOME="${ZENHOME:=/usr/local/zenoss}"
-    && ZENOSSHOME="${ZENOSSHOME:=/home/zenoss}"
+    && MYSQLHOST="${MYSQLHOST:=zenoss4-mysql}" \
+    && ROOTPW="${ROOTPW:=zenoss}" \
+    && USERPW="${USERPW:=zenoss}" \
+    && RABBITMQPW="${RABBITMQPW:=zenoss}" \
+    && ZENHOME="${ZENHOME:=/usr/local/zenoss}" \
+    && ZENOSSHOME="${ZENOSSHOME:=/home/zenoss}" \
     && echo $(grep $(hostname) /etc/hosts | cut -f1) zenoss4-core >> /etc/hosts && echo "zenoss4-core" > /etc/hostname \
     && export ZENHOME=/usr/local/zenoss \
     && export PYTHONPATH=/usr/local/zenoss/lib/python \
