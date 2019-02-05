@@ -79,8 +79,10 @@ RUN ZENOSSHOME="/home/zenoss" \
     && cd / && chown root:root docker-entrypoint.sh && chmod +x docker-entrypoint.sh \
     && cd / && wget -N https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/deps/firstrun.sh \
     && cd / && chown root:root firstrun.sh && chmod +x firstrun.sh \
+    && cd / && wget -N https://raw.githubusercontent.com/stdnwbeheer/zenoss4.2.5-withoutSQL/master/deps/firstbuild.sh \
+    && cd / && chown root:root firstbuild.sh && chmod +x firstbuild.sh \
     && if [ ! -f $ZENHOME/etc/global.conf ]; then cp $ZENHOME/etc/global.conf.example $ZENHOME/etc/global.conf; fi \
-    && /firstrun.sh && rm /mysqlsetup.sh \
+    && /firstbuild.sh && rm /mysqlsetup.sh && rm /firstbuild.sh \
     && su -l -c "$ZENHOME/bin/secure_zenoss_ubuntu.sh" zenoss \
     && /etc/init.d/zenoss stop && sleep 2 \
     && /etc/init.d/rabbitmq-server stop && sleep 2 \
