@@ -92,12 +92,12 @@ RUN ZENOSSHOME="/home/zenoss" \
     && rm *.sql \
     && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zenoss_zep > zenoss_zep.sql \
     && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zodb > zodb.sql \
-    && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zodb_session > zodb_session.sql \
-    # && apt-get -y purge wget \
-    # && apt-get -y autoremove \
-    # && apt-get -y autoclean \
-    # && apt-get -y clean
+    && mysqldump --user=root --password=$ROOTPW --host=$MYSQLHOST zodb_session > zodb_session.sql
 # Expose port 8080 to the host to see ZenOSS web interface
 EXPOSE 8080
 # This container is started default with the docker-enrtypoint.sh script.
 ENTRYPOINT ["/docker-entrypoint.sh"]
+# && apt-get -y purge wget \
+# && apt-get -y autoremove \
+# && apt-get -y autoclean \
+# && apt-get -y clean
